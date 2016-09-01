@@ -21,11 +21,11 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASS = "password";
 
-    public static final String CREATE_TABLE_USER = "CREATE TABLE"
-            +USER_TABLE+ "("
-            +COLUMN_ID+ "INTEGER PRIMARY KEY AUTOINCREMENT,"
-            +COLUMN_EMAIL+ "TEXT,"
-            +COLUMN_PASS+ "TEXT);";
+    public static final String CREATE_TABLE_USER = "CREATE TABLE "
+            + USER_TABLE + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_EMAIL + " TEXT,"
+            + COLUMN_PASS + " TEXT);";
 
     public DbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -54,10 +54,10 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public boolean getUser(String email, String password){
-        String selectQuery = " select * from " +USER_TABLE+ " where "+COLUMN_EMAIL+ " = " + "'" +email+ "'" + "and"
-                +COLUMN_PASS+ " = "+ "'" +password+ "'";
+        String selectQuery = "select * from " + USER_TABLE + " where " +
+                COLUMN_EMAIL + " = " + "'"+email+"'" + " and " + COLUMN_PASS + " = " + "'"+password+"'";
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null); //solved
         cursor.moveToFirst();
         if(cursor.getCount() > 0){
             return true;
