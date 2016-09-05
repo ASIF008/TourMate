@@ -1,4 +1,4 @@
-package com.example.alasif.tourmate;
+package com.example.alasif.tourmate.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.alasif.tourmate.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         logoutBtn = (Button) findViewById(R.id.logoutButton);
         session = new Session(this);
 
-        if(!session.loggedin()){ // interesting
+        if(!session.loggedin()){
             logout();
         }
 

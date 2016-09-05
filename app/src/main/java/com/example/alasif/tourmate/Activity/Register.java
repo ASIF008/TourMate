@@ -1,17 +1,22 @@
-package com.example.alasif.tourmate;
+package com.example.alasif.tourmate.Activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.alasif.tourmate.Database.RegisterDatabaseSource;
+import com.example.alasif.tourmate.Model.RegisterModel;
+import com.example.alasif.tourmate.R;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
     private EditText emailEt,passwordEt;
     private Button registerBtn;
-    private DbHelper database;
+    private RegisterModel registerModel;
+    private RegisterDatabaseSource registerDatabaseSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +26,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         passwordEt = (EditText) findViewById(R.id.passwordEditText);
         registerBtn = (Button) findViewById(R.id.registerButton);
         registerBtn.setOnClickListener(this);
-        database = new DbHelper(this);
     }
 
     @Override
@@ -35,7 +39,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 startActivity(new Intent(Register.this,Login.class));
                 break;
             default:
-
                 break;
         }
     }
@@ -43,17 +46,18 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private void register(){
         String email = emailEt.getText().toString();
         String password = passwordEt.getText().toString();
+        registerModel = new RegisterModel(email, password);
+        registerDatabaseSource = new RegisterDatabaseSource(this);
 
-        if (email.isEmpty() && password.isEmpty()){
+        if(registerModel.getEmail().isEmpty() && registerModel.getPassword().isEmpty()){
             displayToast("username/password is empty");
         }
         else {
-            database.addUser(email,password);
+            registerDatabaseSource.addUser(registerModel);
             displayToast("user registered");
             finish();
         }
     }
-
     private void displayToast(String message){
         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
     }

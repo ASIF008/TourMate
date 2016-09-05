@@ -1,17 +1,19 @@
-package com.example.alasif.tourmate;
+package com.example.alasif.tourmate.Activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.alasif.tourmate.Database.RegisterDatabaseSource;
+import com.example.alasif.tourmate.R;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText emailEt,passwordEt;
     private Button loginBtn,registerBtn;
-    private DbHelper database;
+    private RegisterDatabaseSource registerDatabaseSource;
     private Session session;
 
     @Override
@@ -26,7 +28,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         loginBtn.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
-        database = new DbHelper(this);
+        registerDatabaseSource = new RegisterDatabaseSource(this);
         session = new Session(this);
     }
 
@@ -47,7 +49,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private void login(){
         String email = emailEt.getText().toString();
         String password = passwordEt.getText().toString();
-        if(database.getUser(email,password)){
+
+        if(registerDatabaseSource.getUser(email,password)){
             session.setLoggedin(true);
             startActivity(new Intent(Login.this,MainActivity.class));
             finish();
