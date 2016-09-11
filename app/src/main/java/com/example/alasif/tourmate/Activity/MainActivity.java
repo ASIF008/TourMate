@@ -41,4 +41,8 @@ public class MainActivity extends AppCompatActivity {
         finish();
         startActivity(new Intent(MainActivity.this,Login.class));
     }
+
+    public void creatingNewEvent(View view) {
+        startActivity(new Intent(MainActivity.this,NewEvent.class));
+    }
 }
