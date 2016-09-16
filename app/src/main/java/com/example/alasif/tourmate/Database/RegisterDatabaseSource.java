@@ -27,8 +27,9 @@ public class RegisterDatabaseSource {
     public void addUser(RegisterModel registerModel){
         this.open();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(dbHelper.COLUMN_EMAIL,registerModel.getEmail());
-        contentValues.put(dbHelper.COLUMN_PASS,registerModel.getPassword());
+        contentValues.put(dbHelper.COLUMN_USER_NAME,registerModel.getUserName());
+        contentValues.put(dbHelper.COLUMN_USER_EMAIL,registerModel.getEmail());
+        contentValues.put(dbHelper.COLUMN_USER_PASSWORD,registerModel.getPassword());
 
         long inserted = database.insert(dbHelper.USER_TABLE, null, contentValues);
         this.close();
@@ -38,7 +39,7 @@ public class RegisterDatabaseSource {
     public boolean getUser(String email, String password){
 
         String selectQuery =  "select * from " + DbHelper.USER_TABLE + " where " +
-                DbHelper.COLUMN_EMAIL + " = " + "'"+email+"'" + " and " + DbHelper.COLUMN_PASS + " = " + "'"+password+"'";
+                DbHelper.COLUMN_USER_EMAIL + " = " + "'"+email+"'" + " and " + DbHelper.COLUMN_USER_PASSWORD + " = " + "'"+password+"'";
         this.open();
         database = dbHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery(selectQuery,null);
