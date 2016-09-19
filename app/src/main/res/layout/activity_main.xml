@@ -27,12 +27,24 @@
         android:textSize="20sp"
         android:onClick="creatingNewEvent"
         />
-
-    <LinearLayout
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        >
+        android:layout_height="wrap_content"
+        android:text="Ongoing events"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:onClick="ongoingEvents"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Previous events"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:id="@+id/previousEventsButton"
+        />
+
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +54,13 @@
             android:textSize="20sp"
             android:id="@+id/logoutButton"
             />
-    </LinearLayout>
 
 
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/previousEventsListView"
+    >
+
+</ListView>
 </LinearLayout>
