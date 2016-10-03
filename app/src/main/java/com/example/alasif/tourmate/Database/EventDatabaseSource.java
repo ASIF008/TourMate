@@ -2,8 +2,10 @@ package com.example.alasif.tourmate.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.example.alasif.tourmate.Model.EventModel;
 
@@ -16,12 +18,24 @@ public class EventDatabaseSource {
     DbHelper dbHelper;
     EventModel eventModel;
     SQLiteDatabase sqLiteDatabase;
+    SharedPreferences sharedPreferences;
+     int currentUserId = 0;
+
 
     public EventDatabaseSource(Context context) {
         dbHelper = new DbHelper(context);
+//        currentUserId = sharedPreferences.getInt("userId", 1);
     }
+
+
+
+
     public void open(){
         sqLiteDatabase=dbHelper.getWritableDatabase();
+    }
+
+    public void read(){
+        sqLiteDatabase = dbHelper.getReadableDatabase();
     }
     public void close(){
         sqLiteDatabase.close();
@@ -41,13 +55,20 @@ public class EventDatabaseSource {
 
     }
 
-    public ArrayList<EventModel> getAllEvents(){
-
+    public ArrayList<EventModel> getAllEvents(String loggedUserId){
+        //int currentUserId = Integer.parseInt(loggedUserId);
+        // Toast.makeText(EventDatabaseSource.this, currentUserId, Toast.LENGTH_SHORT).show();
         ArrayList<EventModel> eventModels = new ArrayList<>();
-        this.open();
+        this.read();
 
-        Cursor cursor=sqLiteDatabase.rawQuery("select * from "+DbHelper.EVENT_TABLE,null);
+        //Cursor cursor=sqLiteDatabase.query(dbHelper.EVENT_TABLE,null,dbHelper.COLUMN_USER_ID_FOREIGNKEY+" = "+loggedUserId,null,null,null,null);
+//        SQLiteDatabase db = this.getReadableDatabase();
+       // Cursor cursor = sqLiteDatabase.rawQuery("select" + DbHelper.COLUMN_EVENT_NAME + "," + DbHelper.COLUMN_EVENT_START_DATE + "," + DbHelper.COLUMN_EVENT_END_DATE + "from "+DbHelper.USER_TABLE + "," + DbHelper.EVENT_TABLE +" where "+DbHelper.COLUMN_USER_ID+"='"+DbHelper.COLUMN_USER_ID_FOREIGNKEY+"'");
 
+       Cursor cursor=sqLiteDatabase.rawQuery("select * from "+DbHelper.EVENT_TABLE +" where "+DbHelper.COLUMN_EVENT_ID+"="+1,null);
+        //Cursor cursor=sqLiteDatabase.rawQuery("select * from"+DbHelper.EVENT_TABLE+"where "+DbHelper.COLUMN_USER_ID_FOREIGNKEY+"='"+loggedUserId+"'",null);
+
+       // Cursor cursor=sqLiteDatabase.query(dbHelper.EVENT_TABLE,null,dbHelper.COLUMN_USER_ID_FOREIGNKEY+" = "+loggedUserId,null,null,null,null);
         if(cursor!=null && cursor.getCount()>0){
             cursor.moveToFirst();
             for(int i=0;i<cursor.getCount();i++){

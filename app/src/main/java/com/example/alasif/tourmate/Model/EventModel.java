@@ -1,7 +1,5 @@
 package com.example.alasif.tourmate.Model;
 
-import java.util.ArrayList;
-
 /**
  * Created by asif on 9/16/16.
  */
@@ -41,11 +39,12 @@ public class EventModel {
         return eventEndDate;
     }
 
-    public ArrayList<EventModel> getAllEvent(){
+/*    public ArrayList<EventModel> getAllEvent(){
         ArrayList<EventModel>teams=new ArrayList<>();
         teams.add(new EventModel("bandorban","10","12"));
         teams.add(new EventModel("chittagong","03","01"));
         return teams;
-    }
+
+    }*/
 
 }

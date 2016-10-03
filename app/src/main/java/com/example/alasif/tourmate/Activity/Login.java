@@ -37,6 +37,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         switch (view.getId()){
             case R.id.loginButton:
                 login();
+                
                 break;
             case R.id.registerButton:
                 startActivity(new Intent(Login.this,Register.class));
@@ -51,8 +52,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         String password = passwordEt.getText().toString();
 
         if(registerDatabaseSource.getUser(email,password)){
+
             session.setLoggedin(true);
-            startActivity(new Intent(Login.this,MainActivity.class));
+            int userId = registerDatabaseSource.getUserID(email);
+            session.editor.putInt("userId", userId);
+            session.editor.commit();
+            //Toast.makeText(getApplicationContext(),String.valueOf(userId),Toast.LENGTH_LONG).show();
+           // startActivity(new Intent(Login.this,MainActivity.class));
+            Intent nextIntent = new Intent(Login.this, MainActivity.class);
+            nextIntent.putExtra("userId",userId);
+            startActivity(nextIntent);
             finish();
         }
         else{

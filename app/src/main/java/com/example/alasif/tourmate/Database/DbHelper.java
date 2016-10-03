@@ -1,8 +1,13 @@
 package com.example.alasif.tourmate.Database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.alasif.tourmate.Model.EventModel;
+
+import java.util.ArrayList;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -89,5 +94,33 @@ public class DbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS "+ EXPENSE_TABLE);
         onCreate(sqLiteDatabase);
     }
+
+    /*public ArrayList<EventModel> getAllEvents(String loggedUserId){
+
+        ArrayList<EventModel> eventModels = new ArrayList<>();
+        this.open();
+
+        //Cursor cursor=sqLiteDatabase.query(dbHelper.EVENT_TABLE,null,dbHelper.COLUMN_USER_ID_FOREIGNKEY+" = "+loggedUserId,null,null,null,null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.execSQL("select" + DbHelper.COLUMN_EVENT_NAME + "," + DbHelper.COLUMN_EVENT_START_DATE + "," + DbHelper.COLUMN_EVENT_END_DATE + "from "+DbHelper.USER_TABLE + "," + DbHelper.EVENT_TABLE +" where "+DbHelper.COLUMN_USER_ID+"='"+DbHelper.COLUMN_USER_ID_FOREIGNKEY+"'");
+
+
+        if(cursor!=null && cursor.getCount()>0){
+            cursor.moveToFirst();
+            for(int i=0;i<cursor.getCount();i++){
+
+                int id = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMN_EVENT_ID));
+                String eventName = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_EVENT_NAME));
+                String eventStartDate = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_EVENT_START_DATE));
+                String eventEndDate = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_EVENT_END_DATE));
+                eventModel = new EventModel(eventName, eventStartDate, eventEndDate);
+                cursor.moveToNext();
+                eventModels.add(eventModel);
+            }
+        }
+        cursor.close();
+        this.close();
+        return eventModels;
+    }*/
 
 }

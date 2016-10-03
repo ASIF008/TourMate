@@ -1,12 +1,14 @@
 package com.example.alasif.tourmate.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alasif.tourmate.CustomAdapters.PreviousEventsAdapter;
 import com.example.alasif.tourmate.Database.EventDatabaseSource;
@@ -25,17 +27,18 @@ public class MainActivity extends AppCompatActivity {
     PreviousEventsAdapter previousEventsAdapter;
     EventDatabaseSource eventDatabaseSource;
     Button previousEventsBtn;
+    //SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         loggedinTv = (TextView) findViewById(R.id.loggedInTextView);
         logoutBtn = (Button) findViewById(R.id.logoutButton);
         previousEventsLv = (ListView) findViewById(R.id.previousEventsListView);
         previousEventsBtn = (Button) findViewById(R.id.previousEventsButton);
-        session = new Session(this);
+
+        session = new Session(MainActivity.this);
 
         if (!session.loggedin()) {
             logout();
@@ -51,15 +54,22 @@ public class MainActivity extends AppCompatActivity {
         previousEventsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //EventModel eventModel = new EventModel();
+
                 eventDatabaseSource = new EventDatabaseSource(MainActivity.this);
-                events = eventDatabaseSource.getAllEvents();
+                //SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("TourMate",getApplicationContext().MODE_PRIVATE);
+//                int a = 0;
+//                a = sharedPreferences.getInt("userId",1);
+                int a = getIntent().getIntExtra("userId", 0);
+                String currentUserId = String.valueOf(a);
+                events = eventDatabaseSource.getAllEvents(currentUserId);
                 previousEventsAdapter = new PreviousEventsAdapter(MainActivity.this, events);
                 previousEventsLv.setAdapter(previousEventsAdapter);
+                Toast.makeText(MainActivity.this,"ok",Toast.LENGTH_LONG).show();
             }
         });
 
-
+//        int userId = sharedPreferences.getInt("userId", -1);
+//        Toast.makeText(this,String.valueOf(userId),Toast.LENGTH_LONG).show();
 
     }
 
