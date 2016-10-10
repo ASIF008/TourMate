@@ -15,6 +15,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private Button loginBtn,registerBtn;
     private RegisterDatabaseSource registerDatabaseSource;
     private Session session;
+    private String lastNameOfLoggedInUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +58,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             int userId = registerDatabaseSource.getUserID(email);
             session.editor.putInt("userId", userId);
             session.editor.commit();
-            //Toast.makeText(getApplicationContext(),String.valueOf(userId),Toast.LENGTH_LONG).show();
-           // startActivity(new Intent(Login.this,MainActivity.class));
             Intent nextIntent = new Intent(Login.this, MainActivity.class);
+            lastNameOfLoggedInUser = registerDatabaseSource.getUserLastName(userId);
             nextIntent.putExtra("userId",userId);
+            nextIntent.putExtra("userLastName", lastNameOfLoggedInUser);
             startActivity(nextIntent);
             finish();
         }

@@ -5,6 +5,7 @@ package com.example.alasif.tourmate.Model;
  */
 public class EventModel {
     private int id;
+    private int loogedInUserId;
     private String eventName, eventStartDate, eventEndDate;
 
     public EventModel(int id, String eventName, String eventStartDate, String eventEndDate) {
@@ -14,6 +15,13 @@ public class EventModel {
         this.eventEndDate = eventEndDate;
     }
 
+    public EventModel(String eventName, String eventStartDate, String eventEndDate, int loogedInUserId) {
+        this.eventName = eventName;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.loogedInUserId = loogedInUserId;
+    }
+
     public EventModel(String eventName, String eventStartDate, String eventEndDate) {
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
@@ -21,6 +29,10 @@ public class EventModel {
     }
 
     public EventModel() {
+    }
+
+    public int getLoogedInUserId() {
+        return loogedInUserId;
     }
 
     public int getId() {
@@ -39,12 +51,5 @@ public class EventModel {
         return eventEndDate;
     }
 
-/*    public ArrayList<EventModel> getAllEvent(){
-        ArrayList<EventModel>teams=new ArrayList<>();
-        teams.add(new EventModel("bandorban","10","12"));
-        teams.add(new EventModel("chittagong","03","01"));
-        return teams;
-
-    }*/
 
 }

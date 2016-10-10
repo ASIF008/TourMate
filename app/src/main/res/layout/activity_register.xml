@@ -20,18 +20,31 @@
         android:layout_gravity="center_horizontal"
         android:padding="20dp"
         />
-    <EditText
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="User name"
-        android:textColorHint="@android:color/white"
-        android:id="@+id/userNameEditText"
-        android:inputType="textEmailAddress"
-        />
+        android:orientation="horizontal"
+        >
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="First name"
+            android:textColorHint="@android:color/white"
+            android:id="@+id/firstNameEditText"
+            android:inputType="textEmailAddress"
+            />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Last name"
+            android:textColorHint="@android:color/white"
+            android:id="@+id/lastNameEditText"
+            android:inputType="textEmailAddress"
+            />
+    </LinearLayout>
+
     <EditText
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"

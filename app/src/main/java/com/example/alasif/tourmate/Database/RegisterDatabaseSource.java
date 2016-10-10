@@ -27,7 +27,8 @@ public class RegisterDatabaseSource {
     public void addUser(RegisterModel registerModel){
         this.open();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(dbHelper.COLUMN_USER_NAME,registerModel.getUserName());
+        contentValues.put(dbHelper.COLUMN_USER_FIRST_NAME,registerModel.getFirstName());
+        contentValues.put(dbHelper.COLUMN_USER_LAST_NAME,registerModel.getLastName());
         contentValues.put(dbHelper.COLUMN_USER_EMAIL,registerModel.getEmail());
         contentValues.put(dbHelper.COLUMN_USER_PASSWORD,registerModel.getPassword());
 
@@ -59,5 +60,14 @@ public class RegisterDatabaseSource {
         int uID = cursor.getInt(cursor.getColumnIndex(dbHelper.COLUMN_USER_ID));
         this.close();
         return uID;
+    }
+
+    public String getUserLastName(int userId){
+        this.open();
+        Cursor cursor = database.query(dbHelper.USER_TABLE,null, dbHelper.COLUMN_USER_ID + " = '"+ userId+"' " ,null,null,null,null);
+        cursor.moveToFirst();
+        String userLastName = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_USER_LAST_NAME));
+        this.close();
+        return userLastName;
     }
 }

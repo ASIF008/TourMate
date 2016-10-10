@@ -12,15 +12,22 @@ import java.util.ArrayList;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "tourmate.db";
-    public static final int DB_VERSION = 5;
+    public static final int DB_VERSION = 6;
 
     public static final String USER_TABLE = "users";
     public static final String COLUMN_USER_ID = "user_id";
-    public static final String COLUMN_USER_NAME = "name";
+    public static final String COLUMN_USER_FIRST_NAME = "firstName";
+    public static final String COLUMN_USER_LAST_NAME = "lastName";
     public static final String COLUMN_USER_EMAIL = "email";
     public static final String COLUMN_USER_PASSWORD = "password";
 
-    public static final String CREATE_USER_TABLE ="create table "+USER_TABLE+"( "+COLUMN_USER_ID+" integer primary key, "+COLUMN_USER_NAME+" text, "+COLUMN_USER_EMAIL+" TEXT, "+COLUMN_USER_PASSWORD+" text);";
+    public static final String CREATE_USER_TABLE ="create table "
+            + USER_TABLE + "("
+            + COLUMN_USER_ID + " INTEGER PRIMARY KEY,"
+            + COLUMN_USER_FIRST_NAME +" TEXT,"
+            + COLUMN_USER_LAST_NAME +" TEXT,"
+            + COLUMN_USER_EMAIL +" TEXT,"
+            + COLUMN_USER_PASSWORD +" TEXT);";
 
     public static final String EVENT_TABLE = "events";
     public static final String COLUMN_EVENT_ID = "id";
@@ -35,7 +42,7 @@ public class DbHelper extends SQLiteOpenHelper {
             + COLUMN_EVENT_NAME + " TEXT,"
             + COLUMN_EVENT_START_DATE + " TEXT,"
             + COLUMN_EVENT_END_DATE + " TEXT,"
-            + COLUMN_USER_ID_FOREIGNKEY + " TEXT,"
+            + COLUMN_USER_ID_FOREIGNKEY + " INTEGER,"
             + " FOREIGN KEY ("+COLUMN_USER_ID_FOREIGNKEY+") REFERENCES "+USER_TABLE+"("+COLUMN_USER_ID+"));";
 
 
@@ -94,33 +101,5 @@ public class DbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(" DROP TABLE IF EXISTS "+ EXPENSE_TABLE);
         onCreate(sqLiteDatabase);
     }
-
-    /*public ArrayList<EventModel> getAllEvents(String loggedUserId){
-
-        ArrayList<EventModel> eventModels = new ArrayList<>();
-        this.open();
-
-        //Cursor cursor=sqLiteDatabase.query(dbHelper.EVENT_TABLE,null,dbHelper.COLUMN_USER_ID_FOREIGNKEY+" = "+loggedUserId,null,null,null,null);
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.execSQL("select" + DbHelper.COLUMN_EVENT_NAME + "," + DbHelper.COLUMN_EVENT_START_DATE + "," + DbHelper.COLUMN_EVENT_END_DATE + "from "+DbHelper.USER_TABLE + "," + DbHelper.EVENT_TABLE +" where "+DbHelper.COLUMN_USER_ID+"='"+DbHelper.COLUMN_USER_ID_FOREIGNKEY+"'");
-
-
-        if(cursor!=null && cursor.getCount()>0){
-            cursor.moveToFirst();
-            for(int i=0;i<cursor.getCount();i++){
-
-                int id = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMN_EVENT_ID));
-                String eventName = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_EVENT_NAME));
-                String eventStartDate = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_EVENT_START_DATE));
-                String eventEndDate = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_EVENT_END_DATE));
-                eventModel = new EventModel(eventName, eventStartDate, eventEndDate);
-                cursor.moveToNext();
-                eventModels.add(eventModel);
-            }
-        }
-        cursor.close();
-        this.close();
-        return eventModels;
-    }*/
 
 }

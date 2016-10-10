@@ -12,7 +12,7 @@ import com.example.alasif.tourmate.Model.RegisterModel;
 import com.example.alasif.tourmate.R;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
-    private EditText emailEt,passwordEt,userNameEt;
+    private EditText emailEt,passwordEt,firstNameEt,lastNameEt;
     private Button registerBtn;
     private RegisterModel registerModel;
     private RegisterDatabaseSource registerDatabaseSource;
@@ -22,7 +22,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        userNameEt = (EditText) findViewById(R.id.userNameEditText);
+        firstNameEt = (EditText) findViewById(R.id.firstNameEditText);
+        lastNameEt = (EditText) findViewById(R.id.lastNameEditText);
         emailEt = (EditText) findViewById(R.id.emailEditText);
         passwordEt = (EditText) findViewById(R.id.passwordEditText);
         registerBtn = (Button) findViewById(R.id.registerButton);
@@ -45,10 +46,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void register(){
-        String username = userNameEt.getText().toString();
+        String firstName = firstNameEt.getText().toString();
+        String lastName = lastNameEt.getText().toString();
         String email = emailEt.getText().toString();
         String password = passwordEt.getText().toString();
-        registerModel = new RegisterModel(email, password,username);
+        registerModel = new RegisterModel(email, password,firstName,lastName);
         registerDatabaseSource = new RegisterDatabaseSource(this);
 
         if(registerModel.getEmail().isEmpty() && registerModel.getPassword().isEmpty()){

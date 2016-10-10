@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import com.example.alasif.tourmate.Activity.NewEvent;
 import com.example.alasif.tourmate.Model.EventModel;
 
 import java.util.ArrayList;
@@ -18,18 +19,13 @@ public class EventDatabaseSource {
     DbHelper dbHelper;
     EventModel eventModel;
     SQLiteDatabase sqLiteDatabase;
-    SharedPreferences sharedPreferences;
-     int currentUserId = 0;
-
 
     public EventDatabaseSource(Context context) {
         dbHelper = new DbHelper(context);
-//        currentUserId = sharedPreferences.getInt("userId", 1);
     }
 
 
-
-
+    NewEvent newEvent = new NewEvent();
     public void open(){
         sqLiteDatabase=dbHelper.getWritableDatabase();
     }
@@ -48,6 +44,7 @@ public class EventDatabaseSource {
         contentValues.put(DbHelper.COLUMN_EVENT_NAME,eventModel.getEventName());
         contentValues.put(DbHelper.COLUMN_EVENT_START_DATE,eventModel.getEventStartDate());
         contentValues.put(DbHelper.COLUMN_EVENT_END_DATE,eventModel.getEventEndDate());
+        contentValues.put(DbHelper.COLUMN_USER_ID_FOREIGNKEY,eventModel.getLoogedInUserId());
 
         long inserted=sqLiteDatabase.insert(DbHelper.EVENT_TABLE,null,contentValues);
 
@@ -56,19 +53,13 @@ public class EventDatabaseSource {
     }
 
     public ArrayList<EventModel> getAllEvents(String loggedUserId){
-        //int currentUserId = Integer.parseInt(loggedUserId);
-        // Toast.makeText(EventDatabaseSource.this, currentUserId, Toast.LENGTH_SHORT).show();
+
+
+
+        String currentLoggedInUserId = loggedUserId;
         ArrayList<EventModel> eventModels = new ArrayList<>();
         this.read();
-
-        //Cursor cursor=sqLiteDatabase.query(dbHelper.EVENT_TABLE,null,dbHelper.COLUMN_USER_ID_FOREIGNKEY+" = "+loggedUserId,null,null,null,null);
-//        SQLiteDatabase db = this.getReadableDatabase();
-       // Cursor cursor = sqLiteDatabase.rawQuery("select" + DbHelper.COLUMN_EVENT_NAME + "," + DbHelper.COLUMN_EVENT_START_DATE + "," + DbHelper.COLUMN_EVENT_END_DATE + "from "+DbHelper.USER_TABLE + "," + DbHelper.EVENT_TABLE +" where "+DbHelper.COLUMN_USER_ID+"='"+DbHelper.COLUMN_USER_ID_FOREIGNKEY+"'");
-
-       Cursor cursor=sqLiteDatabase.rawQuery("select * from "+DbHelper.EVENT_TABLE +" where "+DbHelper.COLUMN_EVENT_ID+"="+1,null);
-        //Cursor cursor=sqLiteDatabase.rawQuery("select * from"+DbHelper.EVENT_TABLE+"where "+DbHelper.COLUMN_USER_ID_FOREIGNKEY+"='"+loggedUserId+"'",null);
-
-       // Cursor cursor=sqLiteDatabase.query(dbHelper.EVENT_TABLE,null,dbHelper.COLUMN_USER_ID_FOREIGNKEY+" = "+loggedUserId,null,null,null,null);
+        Cursor cursor = sqLiteDatabase.query(dbHelper.EVENT_TABLE,null,dbHelper.COLUMN_USER_ID_FOREIGNKEY+" = "+currentLoggedInUserId,null,null,null,null);
         if(cursor!=null && cursor.getCount()>0){
             cursor.moveToFirst();
             for(int i=0;i<cursor.getCount();i++){
@@ -86,4 +77,5 @@ public class EventDatabaseSource {
         this.close();
         return eventModels;
     }
+
 }
