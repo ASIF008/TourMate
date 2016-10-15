@@ -17,5 +17,6 @@ public class TodaysWeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.todays_weather_fragment, container, false);
+        //int currentLoggedInUserId = getIntent().getIntExtra("loggedInUser", 0);
     }
 }

@@ -20,14 +20,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView loggedinTv;
-    Button logoutBtn;
-    Session session;
-    ListView previousEventsLv;
-    ArrayList<EventModel> events;
-    PreviousEventsAdapter previousEventsAdapter;
-    EventDatabaseSource eventDatabaseSource;
-    Button previousEventsBtn;
+    private TextView loggedinTv;
+    private Button logoutBtn;
+    private Session session;
     private int currentLoggedInUserId;
     private String lastNameOfLoggedInUser;
 
@@ -37,20 +32,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        currentLoggedInUserId =getIntent().getIntExtra("userId", 0);
 
         loggedinTv = (TextView) findViewById(R.id.loggedInTextView);
         logoutBtn = (Button) findViewById(R.id.logoutButton);
-        previousEventsLv = (ListView) findViewById(R.id.previousEventsListView);
-        previousEventsBtn = (Button) findViewById(R.id.previousEventsButton);
+        currentLoggedInUserId =getIntent().getIntExtra("userId", 0);
+        lastNameOfLoggedInUser = getIntent().getStringExtra("userLastName");
 
+        loggedinTv.setText("Welcome "+lastNameOfLoggedInUser);
         session = new Session(MainActivity.this);
 
         if (!session.loggedin()) {
             logout();
         }
-
-        lastNameOfLoggedInUser = getIntent().getStringExtra("userLastName");
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,23 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 logout();
             }
         });
-
-
-        previousEventsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                eventDatabaseSource = new EventDatabaseSource(MainActivity.this);
-
-                String currentUserId = String.valueOf(currentLoggedInUserId);
-                events = eventDatabaseSource.getAllEvents(currentUserId);
-                previousEventsAdapter = new PreviousEventsAdapter(MainActivity.this, events);
-                previousEventsLv.setAdapter(previousEventsAdapter);
-                Toast.makeText(MainActivity.this,"ok",Toast.LENGTH_LONG).show();
-            }
-        });
-
-       loggedinTv.setText("Welcome "+lastNameOfLoggedInUser);
 
     }
 
@@ -91,5 +67,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void previousEvents(View view) {
+        Intent intent = new Intent(MainActivity.this, PreviousEvents.class);
+        intent.putExtra("loggedInUser",currentLoggedInUserId);
+        startActivity(intent);
+    }
 }

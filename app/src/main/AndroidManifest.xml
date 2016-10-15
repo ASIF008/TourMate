@@ -18,7 +18,8 @@
         <activity android:name=".Activity.Login" />
         <activity android:name=".Activity.Register" />
         <activity android:name=".Activity.NewEvent" />
-        <activity android:name=".Activity.Budget"></activity>
+        <activity android:name=".Activity.Budget" />
+        <activity android:name=".Activity.PreviousEvents"></activity>
     </application>
 
 </manifest>

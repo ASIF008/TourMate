@@ -41,6 +41,7 @@
         android:textAllCaps="false"
         android:textSize="20sp"
         android:id="@+id/previousEventsButton"
+        android:onClick="previousEvents"
         />
 
 
@@ -55,11 +56,5 @@
             />
 
 
-<ListView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/previousEventsListView"
-    >
 
-</ListView>
 </LinearLayout>
